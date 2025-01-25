@@ -1,0 +1,33 @@
+### add blog
+POST http://localhost:5000/api/v1/blogs/add
+Content-Type: application/json
+
+{"title":"Lipsum3900wedd","description":"Lorem ipsum3000","image":"image","userId":"677ea1525f7ef3241a8267ad"}
+
+### get all blogs
+
+GET http://localhost:5000/api/v1/blogs/all
+Content-Type: application/json
+
+### deleteBlog by id
+DELETE http://localhost:5000/api/v1/blogs/delete/6787bd78e630cb39a10b620a
+Content-Type: application/json
+
+###UpdateBlog
+
+PATCH http://localhost:5000/api/v1/blogs/update/678556c9e1b40fc3e473a543
+Content-Type: application/json
+
+
+{"title":"Lipsum59999 updated","description":"Lorem ipsum2","image":"some.jpg"}
+
+###get blog by id
+
+GET http://localhost:5000/api/v1/blogs/678907b2fb08d1b3862125b4
+
+
+
+
+
+
+
