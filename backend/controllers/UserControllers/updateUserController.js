@@ -39,6 +39,10 @@ const updateUser = async (req, res) => {
       updatedFields.password = fields.password[0];
       user.password = updatedFields.password;
     }
+    if (fields.bio) {
+      updatedFields.bio = fields.bio[0];
+      user.bio = updatedFields.bio;
+    }
 
     // Update image if provided
     if (files.profilePic && files.profilePic[0]) {

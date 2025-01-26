@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       requred: false,
     },
+    bio: {
+      type: String,
+      requred: false,
+    },
     isVerified: {
       type: Boolean,
       default: false,
