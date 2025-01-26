@@ -34,7 +34,21 @@ function UserNav() {
         </h1>
       </div>
       <div className="flex flex-row justify-end w-1/2">
-        <Link className="flex flex-col align-center justify-center text-center bg-purple-500 text-xs mx-2  text-white w-[100px] border-white border-2 rounded" to="/dashboard"> My dashboard </Link>
+        <Link
+          className="flex flex-col align-center justify-center text-center bg-purple-500 text-xs mx-2  text-white w-[100px] border-white border-2 rounded"
+          to="/profile"
+        >
+          {" "}
+          My Profile{" "}
+        </Link>
+
+        <Link
+          className="flex flex-col align-center justify-center text-center bg-purple-500 text-xs mx-2  text-white w-[100px] border-white border-2 rounded"
+          to="/dashboard"
+        >
+          {" "}
+          My dashboard{" "}
+        </Link>
         <button
           onClick={handleLogout}
           className="text-center text-xs mx-2   text-white w-[100px] border-white border-2 rounded"
@@ -43,9 +57,6 @@ function UserNav() {
         </button>
       </div>
     </div>
-
-
-
   );
 }
 

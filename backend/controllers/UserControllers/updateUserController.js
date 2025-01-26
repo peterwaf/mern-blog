@@ -18,7 +18,6 @@ const updateUser = async (req, res) => {
       });
     });
 
-    
     const user = res.user; // Use the user found by the middleware
     const updatedFields = {};
 
@@ -46,19 +45,34 @@ const updateUser = async (req, res) => {
 
     // Update image if provided
     if (files.profilePic && files.profilePic[0]) {
-      const result = await cloudinary.uploader.upload(files.profilePic[0].filepath, {
-        folder: "mern-blog/images/profilePics",
-        resource_type: "image",
-      });
+      const result = await cloudinary.uploader.upload(
+        files.profilePic[0].filepath,
+        {
+          folder: "mern-blog/images/profilePics",
+          resource_type: "image",
+        }
+      );
       updatedFields.profilePic = result.secure_url;
       user.profilePic = updatedFields.profilePic;
     }
-    
 
     // Save the updated user
     const updatedUser = await user.save();
 
-    res.status(200).json({ updatedUser, message: "User updated successfully" });
+    res
+      .status(200)
+      .json({
+        user: {
+          firstName: updatedUser.firstName,
+          lastName: updatedUser.lastName,
+          email: updatedUser.email,
+          profilePic: updatedUser.profilePic? user.profilePic : "",
+          bio: updatedUser.bio? user.bio : "",
+          uid: updatedUser._id,
+          isVerified: updatedUser.isVerified
+        },
+        message: "User updated successfully",
+      });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

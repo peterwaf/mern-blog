@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Footer from "./componets/Footer";
 import AllBlogs from "./pages/AllBlogs";
 import ReadMore from "./pages/ReadMore";
+import Profile from "./pages/Profile";
 
 function App() {
   // function to display date
@@ -29,6 +30,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Home displayDate={displayDate} />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/sign-up" element={<SignUpForm />} />
           <Route path="/dashboard" element={<Dashboard displayDate={displayDate} />} />
