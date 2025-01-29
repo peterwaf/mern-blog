@@ -24,7 +24,7 @@ function LoginForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/login",
+        "https://mern-blog-mc80czbuj-peters-projects-e5b89e4b.vercel.app/api/v1/login",
         formData,
         {
           headers: {

@@ -41,7 +41,7 @@ function AddBlogForm(props) {
     setLoadingIcon(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/blogs/add",
+        "https://mern-blog-mc80czbuj-peters-projects-e5b89e4b.vercel.app/api/v1/blogs/add",
         data,
         {
           headers: {
