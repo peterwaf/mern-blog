@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import API from "../../api";
 
 function AddBlogForm(props) {
   const [formData, setFormData] = useState({
@@ -41,7 +42,7 @@ function AddBlogForm(props) {
     setLoadingIcon(true);
     try {
       const response = await axios.post(
-        "https://mern-blog-mc80czbuj-peters-projects-e5b89e4b.vercel.app/api/v1/blogs/add",
+        `${API}/v1/blogs/add`,
         data,
         {
           headers: {

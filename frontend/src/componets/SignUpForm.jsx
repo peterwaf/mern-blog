@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import API from "../../api";
 function SignUpForm() {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -22,26 +23,36 @@ function SignUpForm() {
     }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/signup",
-      formData,{
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`${API}/v1/signup`, formData, {
         headers: {
-          "Content-Type": "application/json"
-      }}
-    );
-    toast.success("Sign up successful");
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", response.data.firstName);
-    navigate("/login");
-    setError("");
-  } catch (error) {
-    toast.error(error.response.data.error);
-    setError(error.response.data.error);
-  }
-}
+          "Content-Type": "application/json",
+        },
+      });
+      toast.success("Sign up successful");
+
+      //remove previous logged in user token
+
+      if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+      }
+      //remove previous logged in user
+
+      if (localStorage.getItem("user")) {
+        localStorage.removeItem("user");
+      }
+
+      //redirect to login
+
+      navigate("/login");
+      setError("");
+    } catch (error) {
+      toast.error(error.response.data.error);
+      setError(error.response.data.error);
+    }
+  };
   return (
     <div
       id="signUP"
@@ -52,7 +63,7 @@ const handleSubmit = async (e) => {
           <h1 className="text-2xl text-center">Sign Up Form</h1>
           <br />
           <input
-          name="firstName"
+            name="firstName"
             type="text"
             className="mb-2 p-2 w-full border-b-2"
             placeholder="First Name"
@@ -66,7 +77,6 @@ const handleSubmit = async (e) => {
             placeholder="Last Name"
             onChange={handleChange}
             required
-            
           />
           <input
             name="email"

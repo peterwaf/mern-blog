@@ -3,13 +3,17 @@ import React from "react";
 import Nav from "../componets/Nav";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import API from "../../api";
+
+
+
 
 function Home() {
   const [homeBlogs, setHomeBlogs] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/blogs/all")
+      .get(`${API}/v1/blogs/all`)
       .then((response) => {
         setHomeBlogs(response.data);
       })
@@ -17,6 +21,8 @@ function Home() {
         console.log(error);
       });
   }, []);
+
+  
   return (
     //style home page with tailwindcss
     <div className="container min-h-[100vh]">

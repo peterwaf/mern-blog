@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import API from "../../api";
 
 function Profile() {
   const [isEditProfile, setIsEditProfile] = useState(false);
@@ -25,7 +26,7 @@ function Profile() {
     const loadUserInfo = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/users/${userId}`
+          `${API}/v1/users/${userId}`
         );
         setUserData(response.data);
         if (response.data.profilePic) {
@@ -72,7 +73,7 @@ function Profile() {
     setLoadingIcon(true);
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/users/update/${userId}`,
+        `${API}/v1/users/update/${userId}`,
         formData,
         {
           headers: {

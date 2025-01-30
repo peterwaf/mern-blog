@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Nav from "../componets/Nav";
+import API from "../../api";
 
 function ReadMore(props) {
   // eslint-disable-next-line no-unused-vars
@@ -17,7 +18,7 @@ function ReadMore(props) {
   const loadBlog = async () => {
     try {
       const blog = await axios.get(
-        `http://localhost:5000/api/v1/blogs/${blogId}`
+        `${API}/v1/blogs/${blogId}`
       );
       setBlog(blog.data);
     } catch (error) {

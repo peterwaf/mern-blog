@@ -4,13 +4,14 @@ import React from "react";
 import UserNav from "../componets/UserNav";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import API from "../../api";
 function AllBlogs(props) {
   const [allBlogs, setAllBlogs] = useState([]);
 
   const loadBlogs = async () => {
     try {
       const allBlogs = await axios.get(
-        "http://localhost:5000/api/v1/blogs/all"
+        `${API}/v1/blogs/all`
       );
       setAllBlogs(allBlogs.data);
     } catch (error) {

@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import UserNav from "../componets/UserNav";
+import API from "../../api";
 function Dashboard() {
   const [isAddBlogFormOpen, setIsAddBlogFormOpen] = useState(false);
   const [isEditBlogFormOpen, setIsEditBlogFormOpen] = useState(false);
@@ -26,7 +27,7 @@ function Dashboard() {
     const fetchBlogItems = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/blogs/all"
+          `${API}/v1/blogs/all`
         );
         //filter blogs by user Id
         const userBlogs = response.data.filter(
@@ -59,7 +60,7 @@ function Dashboard() {
     );
     if (confirm) {
       try {
-        await axios.delete(`http://localhost:5000/api/v1/blogs/delete/${id}`, {
+        await axios.delete(`${API}/v1/blogs/delete/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

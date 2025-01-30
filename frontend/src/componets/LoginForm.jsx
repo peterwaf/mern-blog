@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import API from "../../api";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ function LoginForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://mern-blog-mc80czbuj-peters-projects-e5b89e4b.vercel.app/api/v1/login",
+        `${API}/v1/login`,
         formData,
         {
           headers: {

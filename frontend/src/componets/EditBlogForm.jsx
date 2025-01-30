@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useState,useEffect } from "react";
+import API from "../../api";
 
 function EditBlogForm(props) {
   const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ function EditBlogForm(props) {
     setLoadingIcon(true);
     try {
       const response = await axios.patch(
-        "http://localhost:5000/api/v1/blogs/update/"+formData._id,
+        `${API}/v1/blogs/update/`+formData._id,
         data,
         {
           headers: {
