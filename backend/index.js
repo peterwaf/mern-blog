@@ -19,10 +19,11 @@ mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Connected to mongodb");
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
+    // app.listen(PORT, () => {
+    //   console.log(`Server running on port ${PORT}`);
+    // });
   })
   .catch((error) => console.log(`mongodb connection error ${error}`));
 
+// Export the app for Vercel
 module.exports = app;
