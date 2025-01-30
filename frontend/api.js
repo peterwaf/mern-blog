@@ -12,6 +12,7 @@
 //   return req;
 // });
 
-const API = "http://localhost:5000/api";
+// const API = "http://localhost:5000/api";
+const API = "https://mern-blog-api-rust.vercel.app/api";
 
 export default API;

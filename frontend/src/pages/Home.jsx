@@ -70,7 +70,7 @@ function Home() {
 
                     
                   </div>
-                  <div className="p-2">
+                  <div className="p-2 w-full">
                     <h2 className="font-bold">Lorem Ipsum</h2>
                     <p>
                       {homeBlog.description.substring(0, 100)}
