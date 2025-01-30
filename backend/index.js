@@ -25,4 +25,4 @@ mongoose
   })
   .catch((error) => console.log(`mongodb connection error ${error}`));
 
-module.exports = app;
+export default app;
