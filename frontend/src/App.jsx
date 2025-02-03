@@ -11,6 +11,7 @@ import AllBlogs from "./pages/AllBlogs";
 import ReadMore from "./pages/ReadMore";
 import Profile from "./pages/Profile";
 
+
 function App() {
   // function to display date
   const displayDate = (timestamp) => {

@@ -5,31 +5,26 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import API from "../../api";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function AddBlogForm(props) {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    image: "",
-    userId: localStorage.getItem("uid"),
-  });
+  const [editorContent, setEditorContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
+  const userId = localStorage.getItem("uid");
   const [loadingIcon, setLoadingIcon] = useState(false);
-  const handleChange = (e) => {
-    if (e.target.type === "file" && e.target.files[0]) {
-      setFormData((prevData) => ({
-        ...prevData,
-        [e.target.name]: e.target.files[0],
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [e.target.name]: e.target.value,
-      }));
-    }
-  };
+ console.log(userId);
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = {
+      title: title,
+      description: editorContent,
+      image: image,
+      userId: userId
+    };
     if (!formData.title || !formData.description || !formData.image) {
       toast.error("All fields are required");
       return;
@@ -41,16 +36,12 @@ function AddBlogForm(props) {
     data.append("userId", formData.userId);
     setLoadingIcon(true);
     try {
-      const response = await axios.post(
-        `${API}/v1/blogs/add`,
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.post(`${API}/v1/blogs/add`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       toast.success(response.data.message);
       props.addblogItem(response.data.blog);
     } catch (error) {
@@ -59,13 +50,11 @@ function AddBlogForm(props) {
       setLoadingIcon(false);
       props.closeForm();
     }
-    setFormData({
-      title: "",
-      description: "",
-      image: "",
-      userId: localStorage.getItem("uid"),
-    });
+    setTitle("");
+    setEditorContent("");
+    setImage("");
   };
+
   return (
     <div
       id="blog-form-container"
@@ -77,11 +66,7 @@ function AddBlogForm(props) {
         className="bg-purple-400 rounded absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
         flex flex-col gap-2 p-3 w-full sm:w-9/12"
       >
-        <img
-          src="./images/loading.gif"
-          className={`w-24 mx-auto rounded ${loadingIcon ? "block" : "hidden"}`}
-          alt=""
-        />
+        
         <p className="text-2xl font-bold text-center">Add Blog</p>
         <label htmlFor="title" className="font-bold">
           Title
@@ -91,17 +76,27 @@ function AddBlogForm(props) {
           className="p-2"
           type="text"
           placeholder="Enter Title"
-          onChange={handleChange}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
         />
         <label htmlFor="description" className="font-bold">
           Description
         </label>
-        <textarea
+        {/* <textarea
+          value={formData.description}
           name="description"
-          className="p-2"
+          className="p-2 bg-white"
           placeholder="Enter Description"
           onChange={handleChange}
-        ></textarea>
+        /> */}
+        <ReactQuill
+          className="p-2 bg-white"
+          theme="snow"
+          name="description"
+          value={editorContent}
+          onChange={setEditorContent}
+        />
         <label htmlFor="image" className="font-bold">
           Image
         </label>
@@ -109,7 +104,9 @@ function AddBlogForm(props) {
           name="image"
           type="file"
           placeholder="Upload Image"
-          onChange={handleChange}
+          onChange={(e) => {
+            setImage(e.target.files[0]);
+          }}
         />
         <button className="bg-black w-[200px] mx-auto rounded text-white p-2">
           Add
@@ -122,6 +119,11 @@ function AddBlogForm(props) {
         >
           Cancel
         </button>
+        <img
+          src="./images/loading.gif"
+          className={`w-24 mx-auto rounded ${loadingIcon ? "block" : "hidden"}`}
+          alt=""
+        />
       </form>
     </div>
   );
