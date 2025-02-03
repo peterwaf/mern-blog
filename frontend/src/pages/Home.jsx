@@ -10,11 +10,17 @@ import DOMPurify from "dompurify";
 function Home() {
   const [homeBlogs, setHomeBlogs] = useState([]);
 
+  const getTopLatestBlogs = (blogList) => {
+    return blogList
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by latest createdAt
+      .slice(0, 3); // Get top 3
+  };
+
   useEffect(() => {
     axios
       .get(`${API}/v1/blogs/all`)
       .then((response) => {
-        setHomeBlogs(response.data);
+        setHomeBlogs(getTopLatestBlogs(response.data));
       })
       .catch((error) => {
         console.log(error);
@@ -32,24 +38,36 @@ function Home() {
               Welcome to the daily Chronicles
             </h1>
             <p>
-              In a world buzzing with stories, experiences, and ideas, Daily
-              Chronicles is your digital journal—a space where everyone&#39;s
-              voice matters. Whether it&#39;s a glimpse into your day, a
-              creative piece, or a nugget of wisdom, this is the place to share,
+              In a world brimming with stories, experiences, and ideas, Daily
+              Chronicles is your digital haven—a space where every voice finds
+              its place. Whether it&apos;s a snapshot of your day, a burst of
+              creativity, or a spark of wisdom, this is where you can share,
               connect, and inspire.
             </p>
+            <br />
             <p>
-              At Daily Chronicles, we believe that every story, big or small,
-              holds the power to make someone&#39;s day brighter, spark a
-              conversation, or build a bridge across cultures and experiences.
-              It&#39;s more than a blog; it&#39;s a growing community of
-              storytellers, thinkers, and dreamers.
+              At Daily Chronicles, we believe that every story, no matter how
+              big or small, has the power to brighten someone&apos;s day, ignite
+              meaningful conversations, or bridge gaps between cultures and
+              experiences. This isn&apos;t just a blog; it&apos;s a thriving
+              community of storytellers, thinkers, and dreamers—united by the
+              shared belief that every narrative matters.
             </p>
+            <br />
             <p>
-              Join us as we chronicle life&#39;s moments together, one story at
-              a time. Share yours, explore others, and let&#39;s create a
-              tapestry of humanity that celebrates diversity, creativity, and
-              connection.
+              Join us as we weave together the moments that make life
+              extraordinary, one story at a time. Share yours, explore others,
+              and let&apos;s craft a vibrant tapestry of humanity that
+              celebrates the beauty of diversity, the power of creativity, and
+              the magic of connection. Together, let&apos;s turn the ordinary
+              into the extraordinary.
+            </p>
+
+            <br />
+            <p>
+              Would you like to view more of our posts?{" "}
+              <a href="/login" className="text-purple-500 font-bold bg-white p-1 underline rounded">Log In</a> or{" "}
+              <a href="/sign-up" className="text-purple-500 font-bold bg-white p-1 underline rounded">Sign Up</a> if you don&apos;t have an account
             </p>
           </div>
           <div className="w-full sm:w-1/2 p-2 flex flex-col">
@@ -64,11 +82,14 @@ function Home() {
                   className="blogItem sm:flex bg-slate-300 rounded w-auto mb-2 pt-2"
                 >
                   <div
-                    className="m-2 w-[200px] h-[100px] bg-cover rounded"
+                    className="m-2 w-[200px] h-[125px] bg-cover rounded"
                     style={{ backgroundImage: `url(${homeBlog.image})` }}
                   ></div>
                   <div className="p-2 w-full">
                     <h2 className="font-bold">Lorem Ipsum</h2>
+                    <span className="text-xs font-bold">
+                      Posted on: {new Date(homeBlog.createdAt).toDateString()}
+                    </span>
                     <div
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(

@@ -36,7 +36,7 @@ function ReadMore(props) {
       {localStorage.getItem("token") && <UserNav />}
       {!localStorage.getItem("token") && <Nav />}
 
-      <div className=" hover:shadow-lg h-auto bg-white">
+      <div className=" h-auto bg-white">
         <h1 className="text-4xl font-bold text-center py-4">{blog.title}</h1>
         <time className="block text-xs pb-4 text-center font-bold text-gray-500">
           {" "}
@@ -46,7 +46,7 @@ function ReadMore(props) {
         <img alt="" src={blog.image} className="w-full h-auto px-2 " />
 
         <div
-          className="mt-2 line-clamp-3 text-sm/relaxed h-auto bg-white"
+          className="mt-2 p-2 text-sm/relaxed h-auto bg-white"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(blog.description)
           }}
