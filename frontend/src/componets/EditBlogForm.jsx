@@ -5,36 +5,28 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useState,useEffect } from "react";
 import API from "../../api";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function EditBlogForm(props) {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    image: "",
-    _id: props.selectedBlogId,
-  });
+  const [editorContent, setEditorContent] = useState("");
+    const [title, setTitle] = useState("");
+    const [image, setImage] = useState("");
+    const [_id,set_Id] = useState("");
   const [loadingIcon, setLoadingIcon] = useState(false);
   const [previewImg, setPreviewImg] = useState(props.selectedBlog.image);
   
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (e.target.type === "file" && e.target.files[0]) {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: e.target.files[0],
-      }));
-      setPreviewImg(URL.createObjectURL(e.target.files[0]))
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
+    const formData = {
+      title: title,
+      description: editorContent,
+      image: image,
+      _id: _id
+    }
     if (!formData.title || !formData.description || !formData.image) {
       toast.error("All fields are required");
       return;
@@ -68,12 +60,10 @@ function EditBlogForm(props) {
 
   useEffect(() => {
     if(props.selectedBlog){
-      setFormData({
-        title: props.selectedBlog.title,
-        description: props.selectedBlog.description,
-        image: props.selectedBlog.image,
-        _id: props.selectedBlog._id,
-      })
+      setTitle(props.selectedBlog.title);
+      setEditorContent(props.selectedBlog.description);
+      setImage(props.selectedBlog.image);
+      set_Id(props.selectedBlog._id);
     }
   }, [props.selectedBlog]);
 
@@ -90,11 +80,6 @@ function EditBlogForm(props) {
         className="bg-purple-400 rounded absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
     flex flex-col gap-2 p-3 w-full sm:w-9/12"
       >
-        <img
-          src="./images/loading.gif"
-          className={`w-24 mx-auto rounded ${loadingIcon ? "block" : "hidden"}`}
-          alt=""
-        />
         <p className="text-2xl font-bold text-center">Edit Blog</p>
         <label htmlFor="title" className="font-bold">
           Title
@@ -104,24 +89,31 @@ function EditBlogForm(props) {
           className="p-2"
           type="text"
           placeholder="Enter Title"
-          value={formData.title}
-          onChange={handleChange}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <label htmlFor="description" className="font-bold">
           Description
         </label>
-        <textarea
+        {/* <textarea
           name="description"
           className="p-2"
           placeholder="Enter Description"
           value={formData.description}
           onChange={handleChange}
-        ></textarea>
+        ></textarea> */}
+        <ReactQuill
+                  className="p-2 bg-white"
+                  theme="snow"
+                  name="description"
+                  value={editorContent}
+                  onChange={setEditorContent}
+                />
         <label htmlFor="image" className="font-bold">
           Image
         </label>
         <div>
-          {formData.image && (
+          {image && (
             <img
               src={previewImg}
               className="text-left rounded w-24 h-auto object-cover"
@@ -132,7 +124,15 @@ function EditBlogForm(props) {
           name="image"
           type="file"
           placeholder="Upload Image"
-          onChange={handleChange}
+          onChange={(e) => {
+            setImage(e.target.files[0]);
+            setPreviewImg(URL.createObjectURL(e.target.files[0]));
+          }}
+        />
+        <img
+          src="./images/loading.gif"
+          className={`w-24 mx-auto rounded ${loadingIcon ? "block" : "hidden"}`}
+          alt=""
         />
         <button onClick={handleSubmit} className="bg-black w-[200px] mx-auto rounded text-white p-2">
           Update

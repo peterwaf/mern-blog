@@ -4,9 +4,8 @@ import Nav from "../componets/Nav";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import API from "../../api";
-
-
-
+// for sanitizing html against xss
+import DOMPurify from "dompurify";
 
 function Home() {
   const [homeBlogs, setHomeBlogs] = useState([]);
@@ -22,7 +21,6 @@ function Home() {
       });
   }, []);
 
-  
   return (
     //style home page with tailwindcss
     <div className="container min-h-[100vh]">
@@ -65,20 +63,27 @@ function Home() {
                   key={homeBlog._id}
                   className="blogItem sm:flex bg-slate-300 rounded w-auto mb-2 pt-2"
                 >
-                  
-                    <div className="m-2 w-[200px] h-[100px] bg-cover rounded" style={{backgroundImage: `url(${homeBlog.image})`}}>
-
-                    
-                  </div>
+                  <div
+                    className="m-2 w-[200px] h-[100px] bg-cover rounded"
+                    style={{ backgroundImage: `url(${homeBlog.image})` }}
+                  ></div>
                   <div className="p-2 w-full">
                     <h2 className="font-bold">Lorem Ipsum</h2>
-                    <p>
-                      {homeBlog.description.substring(0, 100)}
-                      <br />
-                      <a className="text-purple-500" href={`${homeBlog.title}/more/${homeBlog._id}`} >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(
+                          homeBlog.description.slice(0, 100)
+                        ),
+                      }}
+                    ></div>
+                    <span>
+                      <a
+                        className="text-purple-500"
+                        href={`${homeBlog.title}/more/${homeBlog._id}`}
+                      >
                         Read More...
                       </a>
-                    </p>
+                    </span>
                   </div>
                 </div>
               ))}

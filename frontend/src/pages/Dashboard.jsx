@@ -8,6 +8,9 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import UserNav from "../componets/UserNav";
 import API from "../../api";
+// for sanitizing html against xss
+import DOMPurify from "dompurify";
+
 function Dashboard() {
   const [isAddBlogFormOpen, setIsAddBlogFormOpen] = useState(false);
   const [isEditBlogFormOpen, setIsEditBlogFormOpen] = useState(false);
@@ -26,9 +29,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchBlogItems = async () => {
       try {
-        const response = await axios.get(
-          `${API}/v1/blogs/all`
-        );
+        const response = await axios.get(`${API}/v1/blogs/all`);
         //filter blogs by user Id
         const userBlogs = response.data.filter(
           (blog) => blog.userId === localStorage.getItem("uid")
@@ -110,38 +111,33 @@ function Dashboard() {
       <div className="bg-black bg-opacity-75 text-center p-2">
         <h2 className="text-sm text-white font-bold text-center">My Blogs</h2>
       </div>
-      
-        <div
-          className="bg-white flex w-full flex-row align-middle justify-center mb-1"
-      
-        >
-          <div className="w-2/12 p-1 flex flex-col justify-center align-middle">
+
+      <div className="bg-white flex w-full flex-row align-middle justify-center mb-1">
+        <div className="w-2/12 p-1 flex flex-col justify-center align-middle">
           <p className="text-purple-500 font-bold line-clamp-3 text-sm/relaxed text-center">
-             Image
-            </p>
-          </div>
-
-          <div className="w-1/3 p-1 flex flex-col justify-center">
-            <p className="text-purple-500 font-bold line-clamp-3 text-sm/relaxed text-center">
-             Title
-            </p>
-          </div>
-
-          <div className="w-2/12 p-1 flex flex-col justify-center">
-            <p className="text-purple-500 font-bold line-clamp-3 text-sm/relaxed text-center">
-              Description
-            </p>
-          </div>
-
-          <div className="w-7/12 p-2 flex flex-col justify-center">
-            <p className="text-purple-500 font-bold line-clamp-3 text-sm/relaxed text-center">
-              Actions
-            </p>
-          </div>
-          
-          
+            Image
+          </p>
         </div>
-      
+
+        <div className="w-1/3 p-1 flex flex-col justify-center">
+          <p className="text-purple-500 font-bold line-clamp-3 text-sm/relaxed text-center">
+            Title
+          </p>
+        </div>
+
+        <div className="w-2/12 p-1 flex flex-col justify-center">
+          <p className="text-purple-500 font-bold line-clamp-3 text-sm/relaxed text-center">
+            Description
+          </p>
+        </div>
+
+        <div className="w-7/12 p-2 flex flex-col justify-center">
+          <p className="text-purple-500 font-bold line-clamp-3 text-sm/relaxed text-center">
+            Actions
+          </p>
+        </div>
+      </div>
+
       {blogItems.map((blogItem) => (
         <div
           className="bg-white flex w-full flex-row align-middle justify-center mb-1"
@@ -162,9 +158,12 @@ function Dashboard() {
           </div>
 
           <div className="w-2/12 p-1 flex flex-col justify-center">
-            <p className="text-black font-bold line-clamp-3 text-sm/relaxed">
-              {blogItem.description.substring(0, 50) + "..."}
-            </p>
+            <div
+              className="text-black font-bold line-clamp-3 text-sm/relaxed"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(blogItem.description.slice(0, 100)),
+              }}
+            />
           </div>
 
           <div className="w-2/12 p-2 flex flex-col justify-center">
@@ -187,7 +186,10 @@ function Dashboard() {
             </button>
           </div>
           <div className="w-2/12 p-2 flex flex-col justify-center">
-            <a href={`/${blogItem.title}/more/${blogItem._id}`} className="text-center text-xs   text-black font-bold w-[100px] border-black border-2 rounded p-2">
+            <a
+              href={`/${blogItem.title}/more/${blogItem._id}`}
+              className="text-center text-xs   text-black font-bold w-[100px] border-black border-2 rounded p-2"
+            >
               Readmore
             </a>
           </div>

@@ -5,14 +5,15 @@ import UserNav from "../componets/UserNav";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import API from "../../api";
+// for sanitizing html against xss
+import DOMPurify from "dompurify";
+
 function AllBlogs(props) {
   const [allBlogs, setAllBlogs] = useState([]);
 
   const loadBlogs = async () => {
     try {
-      const allBlogs = await axios.get(
-        `${API}/v1/blogs/all`
-      );
+      const allBlogs = await axios.get(`${API}/v1/blogs/all`);
       setAllBlogs(allBlogs.data);
     } catch (error) {
       if (error.response.status === 401) {
@@ -51,22 +52,28 @@ function AllBlogs(props) {
             <div className="bg-white p-4 sm:p-6 w-3/4">
               <time className="block text-xs text-gray-500">
                 {" "}
-                Created at : {props.displayDate(blog.createdAt)}{" "} | Written by : {blog.authorName}
+                Created at : {props.displayDate(blog.createdAt)} | Written by :{" "}
+                {blog.authorName}
               </time>
 
               <a href="#">
                 <h3 className="mt-0.5 text-lg text-gray-900">{blog.title}</h3>
               </a>
 
-              <p className="mt-2 line-clamp-3 text-sm/relaxed">
-                {blog.description.substring(0, 400)}
+              <div
+                className="mt-2 line-clamp-3 text-sm/relaxed"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(blog.description.slice(0, 1000)),
+                }}
+              ></div>
+              <span>
                 <a
                   href={`${blog.title}/more/${blog._id}`}
-                  className="text-purple-500 hover:underline px-2 font-bold"
+                  className="text-purple-500 hover:underline font-bold"
                 >
                   Read more..
                 </a>
-              </p>
+              </span>
             </div>
           </article>
         ))}

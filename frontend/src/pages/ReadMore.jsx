@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Nav from "../componets/Nav";
 import API from "../../api";
+// for sanitizing html against xss
+import DOMPurify from "dompurify";
 
 function ReadMore(props) {
   // eslint-disable-next-line no-unused-vars
@@ -17,9 +19,7 @@ function ReadMore(props) {
 
   const loadBlog = async () => {
     try {
-      const blog = await axios.get(
-        `${API}/v1/blogs/${blogId}`
-      );
+      const blog = await axios.get(`${API}/v1/blogs/${blogId}`);
       setBlog(blog.data);
     } catch (error) {
       if (error.response.status === 401) {
@@ -32,28 +32,27 @@ function ReadMore(props) {
     loadBlog();
   });
   return (
-    <div className="h-full">
+    <>
       {localStorage.getItem("token") && <UserNav />}
       {!localStorage.getItem("token") && <Nav />}
-    
-        <article className=" hover:shadow-lg h-auto bg-white">
-          <h1 className="text-4xl font-bold text-center py-4">{blog.title}</h1>
-          <time className="block text-xs pb-4 text-center font-bold text-gray-500"> Created on : {props.displayDate(blog.createdAt)} | Written By : {blog.authorName} </time>
-          <img
-            alt=""
-            src={blog.image}
-            className="w-full h-auto px-2 "
-          />
 
-          <div className="bg-white p-2">
-            
-            <p className="mt-2 line-clamp-3 text-sm/relaxed">
-              {blog.description}
-            </p>
-          </div>
-        </article>
-      
-    </div>
+      <div className=" hover:shadow-lg h-auto bg-white">
+        <h1 className="text-4xl font-bold text-center py-4">{blog.title}</h1>
+        <time className="block text-xs pb-4 text-center font-bold text-gray-500">
+          {" "}
+          Created on : {props.displayDate(blog.createdAt)} | Written By :{" "}
+          {blog.authorName}{" "}
+        </time>
+        <img alt="" src={blog.image} className="w-full h-auto px-2 " />
+
+        <div
+          className="mt-2 line-clamp-3 text-sm/relaxed h-auto bg-white"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(blog.description)
+          }}
+        ></div>
+      </div>
+    </>
   );
 }
 
