@@ -1,5 +1,6 @@
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
+const sendMail = require("../Functions/sendEmail");
 
 const signUp = async (req, res) => {
   //email regex
@@ -49,6 +50,12 @@ const signUp = async (req, res) => {
       expiresIn: "1h",
     });
     res.status(201).json({ firstName, token });
+    const from = "peterwafulah@gmail.com";
+    const to = email;
+    const subject = "Sign up successful";
+    const text = `Hello ${firstName}, You have successfully signed up.`;
+    const html = `<p>Welcome ${firstName}, You have successfully signed up.</p>`;
+    await sendMail(from, to, subject, text, html);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

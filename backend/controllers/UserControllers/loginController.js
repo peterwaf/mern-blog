@@ -1,5 +1,6 @@
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
+const sendMail = require("../Functions/sendEmail");
 const logIn = async (req, res) => {
   try {
     const email = req.body.email;
@@ -22,17 +23,21 @@ const logIn = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res
-      .status(200)
-      .json({
-        firstName: user.firstName,
-        uid: user._id,
-        token,
-        message: "Login successful",
-      });
+    res.status(200).json({
+      firstName: user.firstName,
+      uid: user._id,
+      token,
+      message: "Login successful",
+    });
+    const from = "peterwafulah@gmail.com";
+    const to = email;
+    const subject = "Login successful";
+    const text = `Hello ${user.firstName}, You have successfully logged in.`;
+    const html = `<p>Hello ${user.firstName}, You have successfully logged in.</p>`;
+    await sendMail(from, to, subject, text, html);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-module.exports = {logIn}
+module.exports = { logIn };
