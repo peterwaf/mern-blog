@@ -3,6 +3,7 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "peterwafulah@gmail.com",
+    // pass: "torc dsyv yvdl wvrd",
     pass: process.env.EMAIL_PASSWORD,
   },
 });
@@ -48,5 +49,12 @@ function sendEmail(from, to, subject, text, html) {
     }
   });
 }
+
+// const from = "peterwafulah@gmail.com";
+// const to = 'peterwafulah@gmail.com';
+// const subject = "Login successful";
+// const text = `Hello  You have successfully logged in.`;
+// const html = `<p>Hello  You have successfully logged in.</p>`;
+// sendEmail(from, to, subject, text, html);
 
 module.exports = { sendEmail };

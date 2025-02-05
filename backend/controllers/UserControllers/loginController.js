@@ -28,17 +28,17 @@ const logIn = async (req, res) => {
     const subject = "Login successful";
     const text = `Hello ${user.firstName}, You have successfully logged in.`;
     const html = `<p>Hello ${user.firstName}, You have successfully logged in.</p>`;
-    sendEmail(from, to, subject, text, html);
     res.status(200).json({
       firstName: user.firstName,
       uid: user._id,
       token,
       message: "Login successful",
     });
-    
+    sendEmail(from, to, subject, text, html);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+
 };
 
 module.exports = { logIn };
