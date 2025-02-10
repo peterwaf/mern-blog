@@ -30,3 +30,7 @@ Content-Type: application/json
 
 {"firstName":"Peter","lastName":"Wesley","email":"peterwes333@gmail.com","password":"123456"}
 
+### activete userby email
+
+PATCH https://mern-blog-api-rust.vercel.app/api/v1/users/activate?email="peterwafulah@gmail.com"
+Content-Type: application/json
