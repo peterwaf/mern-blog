@@ -32,5 +32,5 @@ Content-Type: application/json
 
 ### activete userby email
 
-GET https://mern-blog-api-rust.vercel.app/api/v1/users/activate?email=peterwafulah@gmail.com
+PATCH https://mern-blog-api-rust.vercel.app/api/v1/users/activate?email=peterwafulah@gmail.com
 Content-Type: application/json
