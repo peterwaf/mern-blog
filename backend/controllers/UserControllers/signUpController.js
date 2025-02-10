@@ -46,7 +46,7 @@ const signUp = async (req, res) => {
 
     const user = new User({ firstName, lastName, email, password });
     await user.save();
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id,email:email }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     res.status(201).json({ firstName, token });
@@ -56,7 +56,7 @@ const signUp = async (req, res) => {
     const text = `Hello ${firstName}, You have successfully signed up.`;
     const html = `<p>Welcome ${firstName}, You have successfully signed up.</p>
     </br>
-    <p>Thank you for joining Daily Chronicles. Please click <a href="https://mern-blog-api-rust.vercel.app/api/v1/users/activate/token/${token}">here</a> to activate your account</p>
+    <p>Thank you for joining Daily Chronicles. Please click <a href="https://mern-blog-api-rust.vercel.app/api/v1/users/activate/token?token=${token}">here</a> to activate your account</p>
     `;
     sendEmail(from, to, subject, text, html);
   } catch (error) {

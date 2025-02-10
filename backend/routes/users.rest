@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###delete user by id
 
-DELETE https://mern-blog-api-rust.vercel.app/api/v1/users/delete/67aa166164c4e5a06947f530
+DELETE http://localhost:5000/api/v1/users/delete/67aa2c6530e0ec186a929f1e
 
 ###update user
 
@@ -32,5 +32,5 @@ Content-Type: application/json
 
 ### activete userby email
 
-PATCH https://mern-blog-api-rust.vercel.app/api/v1/users/activate?email=peterwafulah@gmail.com
+GET https://mern-blog-api-rust.vercel.app/api/v1/users/activate/token/${token} 
 Content-Type: application/json
