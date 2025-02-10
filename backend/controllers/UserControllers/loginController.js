@@ -1,6 +1,5 @@
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
-const {sendEmail} = require("../Functions/sendEmail");
 const logIn = async (req, res) => {
   try {
     const email = req.body.email;
@@ -34,7 +33,6 @@ const logIn = async (req, res) => {
       token,
       message: "Login successful",
     });
-    sendEmail(from, to, subject, text, html);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

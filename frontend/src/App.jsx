@@ -10,7 +10,8 @@ import Footer from "./componets/Footer";
 import AllBlogs from "./pages/AllBlogs";
 import ReadMore from "./pages/ReadMore";
 import Profile from "./pages/Profile";
-
+import IsVerifiedSuccess from "./pages/IsverifiedSuccess";
+import IsVerifiedFailed from "./pages/IsVerifiedFailed";
 
 function App() {
   // function to display date
@@ -31,6 +32,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Home displayDate={displayDate} />} />
+          <Route path="/is-verified-success" element={<IsVerifiedSuccess />} />
+          <Route path="/is-verified-failed" element={<IsVerifiedFailed />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/sign-up" element={<SignUpForm />} />

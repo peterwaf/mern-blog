@@ -1,6 +1,7 @@
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../Functions/sendEmail");
+const { sendEmail } = require("../Functions/sendEmail");
 
 const signUp = async (req, res) => {
   //email regex
@@ -54,8 +55,11 @@ const signUp = async (req, res) => {
     const to = email;
     const subject = "Sign up successful";
     const text = `Hello ${firstName}, You have successfully signed up.`;
-    const html = `<p>Welcome ${firstName}, You have successfully signed up.</p>`;
-    await sendMail(from, to, subject, text, html);
+    const html = `<p>Welcome ${firstName}, You have successfully signed up.</p>
+    </br>
+    <p>Thank you for joining Daily Chronicles. Please click <a href="https://mern-blog-api-rust.vercel.app/api/v1/users/activate?email=${email}">here</a> to activate your account</p>
+    `;
+    sendEmail(from, to, subject, text, html);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

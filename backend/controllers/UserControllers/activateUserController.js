@@ -18,10 +18,10 @@ const activateUserEmail = async (req, res) => {
         // Activate the user
         user.isVerified = true;
         await user.save();
-
-        res.status(200).json({ message: "User activated successfully" });
+        res.redirect("http://localhost:5173/is-verified-success");
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error.message);
+        res.redirect("http://localhost:5173/is-verified-failed");
     }
 };
 
