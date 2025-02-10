@@ -40,8 +40,8 @@ function LoginForm() {
       navigate("/dashboard");
       setError("");
     } catch (error) {
-      toast.error(error.response.data.error);
-      setError(error.response.data.error);
+      toast.error(error?.response?.data?.error);
+      setError(error?.response?.data?.error);
     }
   };
 

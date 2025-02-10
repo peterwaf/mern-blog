@@ -15,6 +15,7 @@ const {allUsers} = require("../controllers/UserControllers/allUsersController");
 const {getUser} = require("../controllers/UserControllers/getUserController");
 const {updateUser} = require("../controllers/UserControllers/updateUserController");
 const {deleteUser} = require("../controllers/UserControllers/deleteUserControllers");
+const {activateUserEmail} = require("../controllers/UserControllers/activateUserController");
 
 
 //signup
@@ -40,6 +41,13 @@ router.patch("/api/v1/users/update/:id", findUser, updateUser);
 //delete user by id
 
 router.delete("/api/v1/users/delete/:id", deleteUser);
+
+// activate User by email query
+
+router.patch("/api/v1/users/activate", activateUserEmail);
+
+
+
 
 
 module.exports = router;
