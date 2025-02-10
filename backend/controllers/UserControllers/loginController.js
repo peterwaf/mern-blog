@@ -22,11 +22,11 @@ const logIn = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    const from = "peterwafulah@gmail.com";
-    const to = email;
-    const subject = "Login successful";
-    const text = `Hello ${user.firstName}, You have successfully logged in.`;
-    const html = `<p>Hello ${user.firstName}, You have successfully logged in.</p>`;
+    // const from = "peterwafulah@gmail.com";
+    // const to = email;
+    // const subject = "Login successful";
+    // const text = `Hello ${user.firstName}, You have successfully logged in.`;
+    // const html = `<p>Hello ${user.firstName}, You have successfully logged in.</p>`;
     res.status(200).json({
       firstName: user.firstName,
       uid: user._id,
