@@ -44,7 +44,7 @@ router.delete("/api/v1/users/delete/:id", deleteUser);
 
 // activate User by email query
 
-router.patch("/api/v1/users/activate", activateUserEmail);
+router.patch("/api/v1/users/activate/email", activateUserEmail);
 
 
 

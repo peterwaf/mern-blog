@@ -57,7 +57,7 @@ const signUp = async (req, res) => {
     const text = `Hello ${firstName}, You have successfully signed up.`;
     const html = `<p>Welcome ${firstName}, You have successfully signed up.</p>
     </br>
-    <p>Thank you for joining Daily Chronicles. Please click <a href="https://mern-blog-api-rust.vercel.app/api/v1/users/activate?email=${email}">here</a> to activate your account</p>
+    <p>Thank you for joining Daily Chronicles. Please click <a href="https://mern-blog-api-rust.vercel.app/api/v1/users/activate/email?email=${email}">here</a> to activate your account</p>
     `;
     sendEmail(from, to, subject, text, html);
   } catch (error) {
