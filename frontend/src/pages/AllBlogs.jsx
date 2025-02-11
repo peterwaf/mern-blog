@@ -7,9 +7,11 @@ import { useState, useEffect } from "react";
 import API from "../../api";
 // for sanitizing html against xss
 import DOMPurify from "dompurify";
+import SearchForm from "../componets/SearchForm";
 
 function AllBlogs(props) {
   const [allBlogs, setAllBlogs] = useState([]);
+  const [resultMessage, setResultMessage] = useState("");
 
   const loadBlogs = async () => {
     try {
@@ -26,14 +28,40 @@ function AllBlogs(props) {
     loadBlogs();
   }, []);
 
+
+  const handleSearch = (searchText) => {
+    if (searchText) {
+      const filteredBlogs = allBlogs.filter((blog) =>
+        blog.title.toLowerCase().includes(searchText.toLowerCase())||
+        blog.description.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setAllBlogs(filteredBlogs);
+    } else {
+      loadBlogs();
+    }
+  }
+
+//track if any blog is found or not
+  useEffect(() => {
+    if (allBlogs.length > 0) {
+      setResultMessage("");
+    } else {
+      setResultMessage("No Blogs Found");
+    }
+  }, [allBlogs]);
   return (
     <>
       <UserNav />
 
-      <div>
-        <h1 className="text-4xl font-bold text-center pt-12 text-white">
-          All Blogs
-        </h1>
+      <div className="sm:flex p-2">
+        <div className="flex flex-col align-center items-center justify-center sm:w-1/2 p-2">
+          <h1 className="text-4xl font-bold text-center text-white">
+            All Blogs
+          </h1>
+        </div>
+        <div className="flex flex-col align-center items-center justify-center sm:w-1/2 p-2">
+          <SearchForm handleSearch={handleSearch} />
+        </div>
         <br />
       </div>
 
@@ -77,6 +105,8 @@ function AllBlogs(props) {
             </div>
           </article>
         ))}
+    
+        <h2 className="text-2xl text-center text-white">{resultMessage} </h2>
       </div>
     </>
   );
