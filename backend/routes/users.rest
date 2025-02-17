@@ -21,8 +21,7 @@ Content-Type: application/json
 
 ###delete user by id
 
-DELETE http://localhost:5000/api/v1/users/delete/67aa2c6530e0ec186a929f1e
-
+DELETE https://mern-blog-api-rust.vercel.app/api/v1/users/delete/67aa2eab4d416dfdcbdeca18
 ###update user
 
 PATCH http://localhost:5000/api/v1/users/update/6780aebe6c72b9c6d5a08b9b

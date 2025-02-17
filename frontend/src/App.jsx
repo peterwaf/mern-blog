@@ -14,16 +14,6 @@ import IsVerifiedSuccess from "./pages/IsverifiedSuccess";
 import IsVerifiedFailed from "./pages/IsVerifiedFailed";
 
 function App() {
-  // function to display date
-  const displayDate = (timestamp) => {
-    const date = new Date(timestamp);
-    // const day = date.getDate();
-    // const month = date.getMonth() + 1;
-    // const year = date.getFullYear();
-    const localStr = date.toLocaleString("en-US", { timeZone: "GMT" });
-    return `${localStr}`;
-  }
-
  
  
 
@@ -31,15 +21,15 @@ function App() {
     <div className="bg-[url('/images/pexels-veeterzy-114979.jpg')] bg-cover h-auto w-screen text-200">
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home displayDate={displayDate} />} />
+          <Route index element={<Home/>} />
           <Route path="/is-verified-success" element={<IsVerifiedSuccess />} />
           <Route path="/is-verified-failed" element={<IsVerifiedFailed />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/sign-up" element={<SignUpForm />} />
-          <Route path="/dashboard" element={<Dashboard displayDate={displayDate} />} />
-          <Route path="/all" element={<AllBlogs displayDate={displayDate} />} />
-          <Route path="/:blogTitle/more/:blogId" element={<ReadMore displayDate={displayDate} />} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/all" element={<AllBlogs/>} />
+          <Route path="/:blogTitle/more/:blogId" element={<ReadMore/>} />
         </Routes>
       </BrowserRouter>
       <Footer />

@@ -3,17 +3,24 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
 import { useState } from "react";
-function SearchForm({ handleSearch }) {
+import { useDispatch } from "react-redux";
+import { searchBlogs, fetchBlogs } from "../features/blogsSlice";
+function SearchForm() {
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
   const handleChange = (e) => {
     setSearchText(e.target.value);
   };
 
   useEffect(() => {
-    handleSearch(searchText);
+    if (searchText) {
+      dispatch(searchBlogs(searchText));
+    }
+    else{
+      dispatch(fetchBlogs());
+    }
   }, [searchText]);
 
-  console.log(searchText);
   
   return (
     <form onSubmit={(e) => e.preventDefault()} className="flex h-10">

@@ -9,6 +9,7 @@ import Nav from "../componets/Nav";
 import API from "../../api";
 // for sanitizing html against xss
 import DOMPurify from "dompurify";
+import { displayDate } from "../functions/displayDate";
 
 function ReadMore(props) {
   // eslint-disable-next-line no-unused-vars
@@ -40,7 +41,7 @@ function ReadMore(props) {
         <h1 className="text-4xl font-bold text-center py-4">{blog.title}</h1>
         <time className="block text-xs pb-4 text-center font-bold text-gray-500">
           {" "}
-          Created on : {props.displayDate(blog.createdAt)} | Written By :{" "}
+          Created on : {displayDate(blog.createdAt)} | Written By :{" "}
           {blog.authorName}{" "}
         </time>
         <img alt="" src={blog.image} className="w-full h-auto px-2 " />

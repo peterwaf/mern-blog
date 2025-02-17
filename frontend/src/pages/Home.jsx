@@ -1,32 +1,32 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import Nav from "../componets/Nav";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import API from "../../api";
+import { useEffect } from "react";
 // for sanitizing html against xss
 import DOMPurify from "dompurify";
+import { useDispatch, useSelector } from "react-redux";
+import  {fetchBlogs} from "../features/blogsSlice";
 
 function Home() {
-  const [homeBlogs, setHomeBlogs] = useState([]);
-
-  const getTopLatestBlogs = (blogList) => {
-    return blogList
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by latest createdAt
-      .slice(0, 3); // Get top 3
-  };
+  const dispatch = useDispatch();
+  const homeBlogs= useSelector((state) => state.blogs.latestBlogs);
+  const error = useSelector((state) => state.blogs.error);
+  
+  // dispatch(fetchBlogs());
 
   useEffect(() => {
-    axios
-      .get(`${API}/v1/blogs/all`)
-      .then((response) => {
-        setHomeBlogs(getTopLatestBlogs(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    dispatch(fetchBlogs());
+  }, [dispatch]);
 
+  
+
+ useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
+
+  
   return (
     //style home page with tailwindcss
     <div className="container min-h-[100vh]">
