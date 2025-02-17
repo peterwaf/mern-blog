@@ -11,6 +11,7 @@ function Home() {
   const dispatch = useDispatch();
   const homeBlogs= useSelector((state) => state.blogs.latestBlogs);
   const error = useSelector((state) => state.blogs.error);
+  const isLoading = useSelector((state) => state.blogs.loading);
   
   // dispatch(fetchBlogs());
 
@@ -76,6 +77,9 @@ function Home() {
             </h2>
 
             <div className="blogItems w-full">
+              <div className="w-full flex flex-col items-center justify-center align-center">
+              {isLoading? <p>Loading...</p> : ""}
+              </div>
               {homeBlogs.map((homeBlog) => (
                 <div
                   key={homeBlog._id}

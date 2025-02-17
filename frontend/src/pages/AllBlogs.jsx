@@ -18,7 +18,7 @@ function AllBlogs() {
   useEffect(() => {
     dispatch(fetchBlogs());
   }, [dispatch]);
-
+  
 
   return (
     <>
@@ -77,7 +77,7 @@ function AllBlogs() {
           </article>
         ))}
     
-        <h2 className="text-2xl text-center text-white">{isLoading ? "Loading..." : ""} </h2>
+        <h2 className="text-2xl text-center text-white">{isLoading ? "Loading ..." : ""} </h2>
       </div>
     </>
   );
