@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -19,7 +17,7 @@ function SearchForm() {
     else{
       dispatch(fetchBlogs());
     }
-  }, [searchText]);
+  }, [dispatch, searchText]);
 
   
   return (
