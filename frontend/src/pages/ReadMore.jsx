@@ -11,7 +11,7 @@ import API from "../../api";
 import DOMPurify from "dompurify";
 import { displayDate } from "../functions/displayDate";
 
-function ReadMore(props) {
+function ReadMore() {
   // eslint-disable-next-line no-unused-vars
   const { blogTitle, blogId } = useParams();
   const [blog, setBlog] = useState({});
