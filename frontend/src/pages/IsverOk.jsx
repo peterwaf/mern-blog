@@ -3,7 +3,7 @@ import React from "react";
 import Nav from "../componets/Nav";
 import { CiFaceSmile } from "react-icons/ci";
 
-function IsVerifiedSuccess() {
+function IsverOk() {
   return (
     //style home page with tailwindcss
     <div className="container min-h-[100vh]">
@@ -20,4 +20,4 @@ function IsVerifiedSuccess() {
   );
 }
 
-export default IsVerifiedSuccess;
+export default IsverOk;

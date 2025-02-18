@@ -4,7 +4,7 @@ import Nav from "../componets/Nav";
 import { FaRegSadTear } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 
-function IsVerifiedFailed() {
+function IsverFail() {
     const location  = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const error = queryParams.get("error"); 
@@ -24,4 +24,4 @@ function IsVerifiedFailed() {
   );
 }
 
-export default IsVerifiedFailed;
+export default IsverFail;
