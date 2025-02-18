@@ -12,7 +12,8 @@
 //   return req;
 // });
 
-// const API = "http://localhost:5000/api";
-const API = "https://mern-blog-api-rust.vercel.app/api";
+// const API = import.meta.env.VITE_LOCAL_HOST_API_URL;
+const API = import.meta.env.VITE_API_URL;
+
 
 export default API;

@@ -79,6 +79,7 @@ function Home() {
             <div className="blogItems w-full">
               <div className="w-full flex flex-col items-center justify-center align-center">
               {isLoading? <p>Loading...</p> : ""}
+              {error? <p>{error}</p> : ""}
               </div>
               {homeBlogs.map((homeBlog) => (
                 <div
